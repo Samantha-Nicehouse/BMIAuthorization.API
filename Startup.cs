@@ -34,7 +34,7 @@ public class Startup
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "AuthorizationWebAPI", Version = "v1"
+                Title = "AuthorizationWebAPI", Version = "v2"
             });
             options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme {
                 Name = "Authorization",
@@ -95,7 +95,7 @@ public class Startup
         });
 
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthorizationWebAPI v1"));
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthorizationWebAPI v2"));
 
         app.UseHttpsRedirection();
 
