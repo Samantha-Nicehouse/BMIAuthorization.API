@@ -1,0 +1,37 @@
+trigger:
+- clean-authorization
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restoring Nuget packages'
+  inputs:
+    command: 'restore'
+    projects: 'Authorization.csproj'
+    feedsToUse: 'select'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Building Authorization.csproj '
+  inputs:
+    command: 'build'
+    projects: 'Authorization.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Artificats for Authorization.csproj'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'Authorization.csproj'
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
+    modifyOutputPath: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Archeving Published Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
